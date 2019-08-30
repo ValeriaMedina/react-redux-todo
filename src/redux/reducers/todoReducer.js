@@ -1,6 +1,18 @@
-import { combineReducers } from "redux";
-import todoReducer from "./todoReducer";
+import {UPDATE_VALUE} from "../actions/actionTypes";
 
-export default combineReducers ({
-    todoReducer
-});
+const INITIAL_STATE = {
+    value: "",
+    todos: []
+};
+
+export default (state = INITIAL_STATE, action) => {
+    switch (action.type) {
+        case UPDATE_VALUE:
+            return {
+                ...state,
+                value: action.payload
+            }
+            default:
+                return state;
+    };
+};

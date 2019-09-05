@@ -6,21 +6,31 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { connect } from "react-redux";
+import * as actions from "./redux/actions";
 
-const TodoList = ({todos, deleteTodo, toggleCompleted }) => (
+const TodoList = ({ todos, deleteTodo, toggleCompleted }) => (
   <List>
     {todos.map((todo, index) => (
-        <ListItem button key={index} onClick= {() => toggleCompleted(index)}>
-          <Checkbox checked={todo.completed}/>
-          <ListItemText primary={todo.value} />
-          <ListItemSecondaryAction>
-            <IconButton onClick= {() => deleteTodo(index)}>
-              <DeleteIcon/>
-            </IconButton>
-          </ListItemSecondaryAction>
-        </ListItem>
-      ))}
+      <ListItem button key={index} onClick={() => toggleCompleted(index)}>
+        <Checkbox checked={todo.completed} />
+        <ListItemText primary={todo.value} />
+        <ListItemSecondaryAction>
+          <IconButton onClick={() => deleteTodo(index)}>
+            <DeleteIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
+      </ListItem>
+    ))}
   </List>
 );
 
-export default TodoList;
+const mapStatetoProps = ({ todoReducer }) => {
+  const { todos } = todoReducer;
+  return { todos };
+};
+
+export default connect(
+  mapStatetoProps,
+  actions
+)(TodoList);
